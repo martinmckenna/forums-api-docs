@@ -80,7 +80,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -108,7 +108,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -130,7 +130,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         }
       },
@@ -157,7 +157,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -196,7 +196,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -226,7 +226,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -248,7 +248,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         }
       },
@@ -275,7 +275,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -314,7 +314,7 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -344,211 +344,412 @@
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
       }
     },
-    "/pet/findByStatus": {
+    "/mentions": {
       "get": {
-        "tags": ["pet"],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
-        "produces": ["application/json", "application/xml"],
+        "tags": ["mentions"],
+        "summary": "List mentions",
+        "description": "",
+        "operationId": "listMentions",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "status",
+            "name": "unread_only",
             "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": ["available", "pending", "sold"],
-              "default": "available"
-            },
-            "collectionFormat": "multi"
+            "description": "Only get unread mentions",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of mentions to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many mentions to get per page",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": { "$ref": "#/definitions/Pet" }
-            }
+            "schema": { "$ref": "#/definitions/ApiResponse" }
           },
-          "400": { "description": "Invalid status value" }
-        },
-        "security": [{ "petstore_auth": ["write:pets", "read:pets"] }]
-      }
-    },
-    "/pet/findByTags": {
-      "get": {
-        "tags": ["pet"],
-        "summary": "Finds Pets by tags",
-        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
-        "produces": ["application/json", "application/xml"],
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": true,
-            "type": "array",
-            "items": { "type": "string" },
-            "collectionFormat": "multi"
-          }
-        ],
-        "responses": {
-          "200": {
+          "400": {
             "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": { "$ref": "#/definitions/Pet" }
-            }
-          },
-          "400": { "description": "Invalid tag value" }
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
         },
-        "security": [{ "petstore_auth": ["write:pets", "read:pets"] }],
-        "deprecated": true
+        "security": [{ "bearer-token": [] }]
       }
     },
-    "/pet/{petId}": {
-      "get": {
-        "tags": ["pet"],
-        "summary": "Find pet by ID",
-        "description": "Returns a single pet",
-        "operationId": "getPetById",
-        "produces": ["application/json", "application/xml"],
+    "/mentions/{mention_id}/read": {
+      "post": {
+        "tags": ["mentions"],
+        "summary": "Mark mention read",
+        "description": "",
+        "operationId": "markMentionRead",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "petId",
+            "name": "mention_id",
             "in": "path",
-            "description": "ID of pet to return",
+            "description": "ID of the mention to be marked read",
             "required": true,
             "type": "integer",
+            "minimum": 1,
             "format": "int64"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/Pet" }
+            "schema": { "$ref": "#/definitions/ApiResponse" }
           },
-          "400": { "description": "Invalid ID supplied" },
-          "404": { "description": "Pet not found" }
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
         },
-        "security": [{ "api_key": [] }]
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/offenses": {
+      "get": {
+        "tags": ["offenses"],
+        "summary": "List offenses",
+        "description": "",
+        "operationId": "listOffenses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "Offenses tied to a user ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
       },
       "post": {
-        "tags": ["pet"],
-        "summary": "Updates a pet in the store with form data",
+        "tags": ["offenses"],
+        "summary": "Create an offense",
         "description": "",
-        "operationId": "updatePetWithForm",
-        "consumes": ["application/x-www-form-urlencoded"],
-        "produces": ["application/json", "application/xml"],
+        "operationId": "createOffense",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet that needs to be updated",
+            "in": "body",
+            "name": "body",
+            "description": "Offense information",
             "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "description": "Updated name of the pet",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "status",
-            "in": "formData",
-            "description": "Updated status of the pet",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": { "405": { "description": "Invalid input" } },
-        "security": [{ "petstore_auth": ["write:pets", "read:pets"] }]
-      },
-      "delete": {
-        "tags": ["pet"],
-        "summary": "Deletes a pet",
-        "description": "",
-        "operationId": "deletePet",
-        "produces": ["application/json", "application/xml"],
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "Pet id to delete",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "400": { "description": "Invalid ID supplied" },
-          "404": { "description": "Pet not found" }
-        },
-        "security": [{ "petstore_auth": ["write:pets", "read:pets"] }]
-      }
-    },
-    "/user/login": {
-      "get": {
-        "tags": ["user"],
-        "summary": "Logs user into the system",
-        "description": "",
-        "operationId": "loginUser",
-        "produces": ["application/json", "application/xml"],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": true,
-            "type": "string"
+            "schema": { "$ref": "#/definitions/Offense" }
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
-            "headers": {
-              "X-Expires-After": {
-                "type": "string",
-                "format": "date-time",
-                "description": "date in UTC when token expires"
-              },
-              "X-Rate-Limit": {
-                "type": "integer",
-                "format": "int32",
-                "description": "calls per hour allowed by the user"
-              }
-            },
-            "schema": { "type": "string" }
+            "schema": { "$ref": "#/definitions/ApiResponse" }
           },
-          "400": { "description": "Invalid username/password supplied" }
-        }
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/offenses/{offense_id}": {
+      "get": {
+        "tags": ["offenses"],
+        "summary": "View an offense",
+        "description": "",
+        "operationId": "viewOffense",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "offense_id",
+            "in": "path",
+            "description": "ID of the offense to be viewed",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "put": {
+        "tags": ["offenses"],
+        "summary": "Update an offense",
+        "description": "",
+        "operationId": "updateOffense",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Offense information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/UpdateOffense" }
+          },
+          {
+            "name": "offense_id",
+            "in": "path",
+            "description": "ID of the offense to be updated",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "description": "Action to take on offense",
+            "required": false,
+            "type": "string",
+            "enum": ["approve", "close"],
+            "default": "approve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "delete": {
+        "tags": ["offenses"],
+        "summary": "Delete an offense",
+        "description": "",
+        "operationId": "deleteOffense",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "offense_id",
+            "in": "path",
+            "description": "ID of the offense to be deleted",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/offenses/own": {
+      "get": {
+        "tags": ["offenses"],
+        "summary": "List my offenses",
+        "description": "",
+        "operationId": "viewMyOffenses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "active_only",
+            "in": "query",
+            "description": "Offenses that are currently active",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/offenses/closed": {
+      "get": {
+        "tags": ["offenses"],
+        "summary": "List closed offenses",
+        "description": "",
+        "operationId": "listClosedOffenses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pm_only",
+            "in": "query",
+            "description": "Offenses that are only tied to private messages",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "forum_id",
+            "in": "query",
+            "description": "Offenses that are tied to posts in a specific forum",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/offenses/pending": {
+      "get": {
+        "tags": ["offenses"],
+        "summary": "List pending offenses",
+        "description": "",
+        "operationId": "listPendingOffenses",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pm_only",
+            "in": "query",
+            "description": "Offenses that are only tied to private messages",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "forum_id",
+            "in": "query",
+            "description": "Offenses that are tied to posts in a specific forum",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
       }
     }
   },
@@ -568,6 +769,17 @@
         "message": { "type": "string" }
       }
     },
+    "APIError": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Something went wrong." },
+          "field": { "type": "string", "example": "email" }
+        }
+      },
+      "collectionFormat": "multi"
+    },
     "Account": {
       "type": "object",
       "required": [],
@@ -585,6 +797,15 @@
         "description": { "type": "string", "example": "This category is for general forums" }
       },
       "xml": { "name": "Category" }
+    },
+    "CategoryID": {
+      "type": "object",
+      "required": [""],
+      "properties": {
+        "title": { "type": "string", "example": "General" },
+        "description": { "type": "string", "example": "This category is for general forums" }
+      },
+      "xml": { "name": "CategoryID" }
     },
     "Forum": {
       "type": "object",
@@ -616,14 +837,25 @@
       },
       "xml": { "name": "Forum" }
     },
-    "CategoryID": {
+    "Offense": {
       "type": "object",
-      "required": [""],
+      "required": ["reason"],
       "properties": {
-        "title": { "type": "string", "example": "General" },
-        "description": { "type": "string", "example": "This category is for general forums" }
+        "reason": { "type": "string", "example": "This person acted really bad." },
+        "is_ban": { "type": "boolean", "example": false },
+        "exp_mins": { "type": "integer", "example": 32000 },
+        "post_id": { "type": "integer", "format": "int32", "example": 12 },
+        "private_message_post_id": { "type": "integer", "format": "int32", "example": 12 }
       },
-      "xml": { "name": "Account" }
+      "xml": { "name": "Offense" }
+    },
+    "UpdateOffense": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "reason": { "type": "string", "example": "This person acted really bad." }
+      },
+      "xml": { "name": "Offense" }
     },
     "Pet": {
       "type": "object",
