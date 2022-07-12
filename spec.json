@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "# Welcome to the Basement Community API Docs \n To get started, you'll want to make an account on either basementcommunity.com or use the /register endpoint to register an account. From there, you can take the `token` from the response, plug it in to the _Authentication_ section below, and start authorizing your requests. ",
+    "description": "# Welcome to the Basement Community API Docs \n To get started, you'll want to make an account on either basementcommunity.com or use the /register endpoint to register an account. From there, you can take the `token` from the response, plug it in to the _Authentication_ section below, and start authorizing your requests. \n\n The base URL we will be using here is `api.staging.basementcommunity.com`",
     "version": "1.0.0",
     "title": "Basement Community",
     "contact": { "email": "" },
@@ -1373,6 +1373,420 @@
         },
         "security": [{ "bearer-token": [] }]
       }
+    },
+    "/profile": {
+      "get": {
+        "tags": ["profile"],
+        "summary": "View profile",
+        "description": "",
+        "operationId": "getProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "put": {
+        "tags": ["profile"],
+        "summary": "Update profile",
+        "description": "",
+        "operationId": "updateProfile",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Profile information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Profile" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Login",
+        "description": "",
+        "operationId": "login",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Credentials",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Login" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Register Account",
+        "description": "",
+        "operationId": "register",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Credentials",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Register" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Logout",
+        "description": "",
+        "operationId": "logout",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/password/reset": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Trigger Reset Password",
+        "description": "",
+        "operationId": "resetPassword",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Credentials",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ResetPassword" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/password/change": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Update password",
+        "description": "",
+        "operationId": "updatePassword",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Credentials",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ChangePassword" }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token retrieved from reset password email (if not logged in)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/token/extend": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Extend token",
+        "description": "Provides a new API Key to client to make subsequent requests",
+        "operationId": "extendToken",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/reports": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "List Reports",
+        "description": "",
+        "operationId": "listReports",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "forum_id",
+            "in": "query",
+            "description": "Reports for a specific forum ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "own_only",
+            "in": "query",
+            "description": "Get all of my reports",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pm_reports_only",
+            "in": "query",
+            "description": "Reports tied to PMs",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "closed_only",
+            "in": "query",
+            "description": "Closed reports only",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "post": {
+        "tags": ["reports"],
+        "summary": "Create a report",
+        "description": "",
+        "operationId": "createReport",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Offense information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Report" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/reports/{report_id}": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "View a report",
+        "description": "",
+        "operationId": "viewReport",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "description": "ID of the report to be viewed",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "put": {
+        "tags": ["reports"],
+        "summary": "Update a report",
+        "description": "",
+        "operationId": "updateReport",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Report information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/UpdateReport" }
+          },
+          {
+            "name": "report_id",
+            "in": "path",
+            "description": "ID of the report to be updated",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/reports/{report_id}/own": {
+      "put": {
+        "tags": ["reports"],
+        "summary": "Own a report",
+        "description": "",
+        "operationId": "ownReport",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "description": "ID of the report to be updated",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
     }
   },
   "securityDefinitions": {
@@ -1436,7 +1850,7 @@
     },
     "CategoryID": {
       "type": "object",
-      "required": [""],
+      "required": [],
       "properties": {
         "title": { "type": "string", "example": "General" },
         "description": {
@@ -1445,6 +1859,15 @@
         }
       },
       "xml": { "name": "CategoryID" }
+    },
+    "ChangePassword": {
+      "type": "object",
+      "required": ["new_password"],
+      "properties": {
+        "new_password": { "type": "string", "example": "fdsaf@#fdsfDFASF" },
+        "old_password": { "type": "string", "example": "fdsaf@#fdsf" }
+      },
+      "xml": { "name": "ChangePassword" }
     },
     "Forum": {
       "type": "object",
@@ -1489,6 +1912,21 @@
         "icon_id": { "type": "integer", "format": "int32", "example": 12 }
       },
       "xml": { "name": "Forum" }
+    },
+    "Login": {
+      "type": "object",
+      "required": ["username", "password"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "dril"
+        },
+        "password": {
+          "type": "string",
+          "example": "fdsafds324324@34234#FF"
+        }
+      },
+      "xml": { "name": "Offense" }
     },
     "Offense": {
       "type": "object",
@@ -1536,6 +1974,76 @@
       },
       "xml": { "name": "PrivateMessageThread" }
     },
+    "Profile": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "bio": { "type": "integer", "example": "i am from new york city" },
+        "byline": {
+          "type": "string",
+          "example": "This is what appears under your avatar"
+        },
+        "discord": { "type": "string", "example": "@someguy" },
+        "email": { "type": "string", "example": "hello@gmail.com" },
+        "gender": { "type": "string", "example": "female" },
+        "other_link": { "type": "string", "example": "github.com/hello" },
+        "twitter": { "type": "string", "example": "@dril" }
+      },
+      "xml": { "name": "Profile" }
+    },
+    "Register": {
+      "type": "object",
+      "required": ["username", "password", "email", "timezone"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "hello@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "fdsafds324324@34234#FF"
+        },
+        "timezone": {
+          "type": "string",
+          "example": "America/New_York"
+        },
+        "username": {
+          "type": "string",
+          "example": "dril"
+        }
+      },
+      "xml": { "name": "Register" }
+    },
+    "Report": {
+      "type": "object",
+      "required": ["body"],
+      "properties": {
+        "body": {
+          "type": "string",
+          "example": "This post is bad!!!"
+        },
+        "post_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "private_message_post_id": {
+          "type": "integer",
+          "example": 12
+        }
+      },
+      "xml": { "name": "Register" }
+    },
+    "ResetPassword": {
+      "type": "object",
+      "required": ["email"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "hello@gmail.com"
+        }
+      },
+      "xml": { "name": "ResetPassword" }
+    },
     "UpdateOffense": {
       "type": "object",
       "required": [],
@@ -1545,7 +2053,18 @@
           "example": "This person acted really bad."
         }
       },
-      "xml": { "name": "Offense" }
+      "xml": { "name": "UpdateOffense" }
+    },
+    "UpdateReport": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "is_closed": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      "xml": { "name": "UpdateReport" }
     }
   }
 }
