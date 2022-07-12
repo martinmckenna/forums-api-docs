@@ -350,6 +350,105 @@
         "security": [{ "bearer-token": [] }]
       }
     },
+    "/icon": {
+      "post": {
+        "tags": ["images"],
+        "summary": "Create Icon",
+        "description": "",
+        "operationId": "createIcon",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Icon to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/icon/{icon_id}": {
+      "put": {
+        "tags": ["images"],
+        "summary": "Update Icon",
+        "description": "",
+        "operationId": "updateIcon",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Icon to upload",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "icon_id",
+            "in": "path",
+            "description": "ID of the icon to update",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/uploadavatar": {
+      "post": {
+        "tags": ["images"],
+        "summary": "Upload avatar to user account",
+        "description": "",
+        "operationId": "uploadAvatar",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Avatar to upload",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
     "/mentions": {
       "get": {
         "tags": ["mentions"],
