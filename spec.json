@@ -1,10 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Hello it me",
+    "description": "# Welcome to the Basement Community API Docs \n To get started, you'll want to make an account on either basementcommunity.com or use the /register endpoint to register an account. From there, you can take the `token` from the response, plug it in to the _Authentication_ section below, and start authorizing your requests. ",
     "version": "1.0.0",
     "title": "Basement Community",
-    "contact": { "email": "mmckenna.phila@gmail.com" },
+    "contact": { "email": "" },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -478,7 +478,8 @@
             "description": "How many mentions to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -555,7 +556,8 @@
             "description": "How many offenses to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -736,7 +738,8 @@
             "description": "How many offenses to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -788,7 +791,8 @@
             "description": "How many offenses to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -840,7 +844,8 @@
             "description": "How many offenses to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -894,7 +899,8 @@
             "description": "How many offenses to get per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -1019,7 +1025,7 @@
     "/posts/{post_id}/page": {
       "get": {
         "tags": ["posts"],
-        "summary": "Get page number for page",
+        "summary": "Get page number for post",
         "description": "",
         "operationId": "getPostPage",
         "consumes": ["application/json"],
@@ -1040,7 +1046,8 @@
             "description": "How many posts per page",
             "required": false,
             "type": "integer",
-            "default": 25
+            "default": 25,
+            "maximum": 100
           }
         ],
         "responses": {
@@ -1083,7 +1090,288 @@
             "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages": {
+      "get": {
+        "tags": ["private messages"],
+        "summary": "List private messages",
+        "description": "",
+        "operationId": "listPrivateMessages",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "unread_only",
+            "in": "query",
+            "description": "Only get unread PMs",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of PMs to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many PMs to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "post": {
+        "tags": ["private messages"],
+        "summary": "Create private message",
+        "description": "",
+        "operationId": "createPrivateMessage",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "PM information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PrivateMessageThread" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages/{private_message_thread_id}": {
+      "get": {
+        "tags": ["private messages"],
+        "summary": "View private message thread",
+        "description": "",
+        "operationId": "viewPrivateMessageThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_thread_id",
+            "in": "path",
+            "description": "ID of the PM thread to view",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages/posts/{private_message_thread_id}": {
+      "get": {
+        "tags": ["private messages"],
+        "summary": "List posts in PM thread",
+        "description": "",
+        "operationId": "listPrivateMessagePosts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_thread_id",
+            "in": "path",
+            "description": "ID of the PM thread to view posts for",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "post": {
+        "tags": ["private messages"],
+        "summary": "Create post in PM thread",
+        "description": "",
+        "operationId": "createPrivateMessagePost",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_thread_id",
+            "in": "path",
+            "description": "ID of the PM thread to create a post for",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "PM information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PrivateMessagePost" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages/posts/view/{private_message_post_id}": {
+      "get": {
+        "tags": ["private messages"],
+        "summary": "View post in PM thread",
+        "description": "",
+        "operationId": "viewPrivateMessagePost",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_thread_id",
+            "in": "path",
+            "description": "ID of the PM thread to view post for",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages/posts/{private_message_post_id}/page": {
+      "get": {
+        "tags": ["private messages"],
+        "summary": "Get page number for private message post",
+        "description": "",
+        "operationId": "getPrivateMessagePostPage",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_post_id",
+            "in": "path",
+            "description": "ID of the PM post to get page number for",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many posts per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/privatemessages/posts/{private_message_post_id}/read": {
+      "post": {
+        "tags": ["private messages"],
+        "summary": "Mark PM posts in thread read up to this post",
+        "description": "",
+        "operationId": "markPrivateMessagePostRead",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "private_message_post_id",
+            "in": "path",
+            "description": "ID of the PM post to mark read",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
       }
     }
   },
@@ -1105,13 +1393,24 @@
     },
     "APIError": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "error": { "type": "string", "example": "Something went wrong." },
-          "field": { "type": "string", "example": "email" }
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "example": "Something went wrong with field_1."
+            },
+            "field": { "type": ["string", "null"], "example": "field_1" }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "error": { "type": "string", "example": "Something went wrong." }
+          }
         }
-      },
+      ],
       "collectionFormat": "multi"
     },
     "Account": {
@@ -1128,7 +1427,10 @@
       "required": ["title"],
       "properties": {
         "title": { "type": "string", "example": "General" },
-        "description": { "type": "string", "example": "This category is for general forums" }
+        "description": {
+          "type": "string",
+          "example": "This category is for general forums"
+        }
       },
       "xml": { "name": "Category" }
     },
@@ -1137,7 +1439,10 @@
       "required": [""],
       "properties": {
         "title": { "type": "string", "example": "General" },
-        "description": { "type": "string", "example": "This category is for general forums" }
+        "description": {
+          "type": "string",
+          "example": "This category is for general forums"
+        }
       },
       "xml": { "name": "CategoryID" }
     },
@@ -1147,10 +1452,17 @@
       "properties": {
         "title": { "type": "string", "example": "Sports Forum" },
         "category_id": { "type": "integer", "format": "int32", "example": 12 },
-        "description": { "type": "string", "example": "This forum is about sports" },
+        "description": {
+          "type": "string",
+          "example": "This forum is about sports"
+        },
         "is_hidden": { "type": "boolean", "example": true },
         "mod_only": { "type": "boolean", "example": true },
-        "parent_forum_id": { "type": "integer", "format": "int32", "example": 12 },
+        "parent_forum_id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 12
+        },
         "is_deleted": { "type": "boolean", "example": true },
         "icon_id": { "type": "integer", "format": "int32", "example": 12 }
       },
@@ -1162,10 +1474,17 @@
       "properties": {
         "title": { "type": "string", "example": "Sports Forum" },
         "category_id": { "type": "integer", "format": "int32", "example": 12 },
-        "description": { "type": "string", "example": "This forum is about sports" },
+        "description": {
+          "type": "string",
+          "example": "This forum is about sports"
+        },
         "is_hidden": { "type": "boolean", "example": true },
         "mod_only": { "type": "boolean", "example": true },
-        "parent_forum_id": { "type": "integer", "format": "int32", "example": 12 },
+        "parent_forum_id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 12
+        },
         "is_deleted": { "type": "boolean", "example": true },
         "icon_id": { "type": "integer", "format": "int32", "example": 12 }
       },
@@ -1175,19 +1494,18 @@
       "type": "object",
       "required": ["reason"],
       "properties": {
-        "reason": { "type": "string", "example": "This person acted really bad." },
+        "reason": {
+          "type": "string",
+          "example": "This person acted really bad."
+        },
         "is_ban": { "type": "boolean", "example": false },
         "exp_mins": { "type": "integer", "example": 32000 },
         "post_id": { "type": "integer", "format": "int32", "example": 12 },
-        "private_message_post_id": { "type": "integer", "format": "int32", "example": 12 }
-      },
-      "xml": { "name": "Offense" }
-    },
-    "UpdateOffense": {
-      "type": "object",
-      "required": [],
-      "properties": {
-        "reason": { "type": "string", "example": "This person acted really bad." }
+        "private_message_post_id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 12
+        }
       },
       "xml": { "name": "Offense" }
     },
@@ -1198,10 +1516,36 @@
         "body": { "type": "string", "example": "Hey guys i'm new here lol." }
       },
       "xml": { "name": "Post" }
+    },
+    "PrivateMessagePost": {
+      "type": "object",
+      "required": ["body"],
+      "properties": {
+        "body": { "type": "string", "example": "Hey how are you? Let's chat!" }
+      },
+      "xml": { "name": "PrivateMessagePost" }
+    },
+    "PrivateMessageThread": {
+      "type": "object",
+      "required": ["body", "title", "recipient_id"],
+      "properties": {
+        "body": { "type": "string", "example": "Hey how are you? Let's chat!" },
+        "icon_id": { "type": "integer", "example": 12 },
+        "recipient_id": { "type": "interger", "example": 14 },
+        "title": { "type": "string", "example": "Hiya!" }
+      },
+      "xml": { "name": "PrivateMessageThread" }
+    },
+    "UpdateOffense": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "reason": {
+          "type": "string",
+          "example": "This person acted really bad."
+        }
+      },
+      "xml": { "name": "Offense" }
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   }
 }
