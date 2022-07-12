@@ -378,7 +378,8 @@
             "in": "query",
             "description": "How many mentions to get per page",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 25
           }
         ],
         "responses": {
@@ -454,7 +455,8 @@
             "in": "query",
             "description": "How many offenses to get per page",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 25
           }
         ],
         "responses": {
@@ -634,7 +636,8 @@
             "in": "query",
             "description": "How many offenses to get per page",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 25
           }
         ],
         "responses": {
@@ -685,7 +688,8 @@
             "in": "query",
             "description": "How many offenses to get per page",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 25
           }
         ],
         "responses": {
@@ -736,7 +740,8 @@
             "in": "query",
             "description": "How many offenses to get per page",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "default": 25
           }
         ],
         "responses": {
@@ -750,6 +755,236 @@
           }
         },
         "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/posts/{thread_id}": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "List posts in thread",
+        "description": "",
+        "operationId": "listPosts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to list posts",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "Offenses that are tied to a user",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["posts"],
+        "summary": "Create posts in thread",
+        "description": "",
+        "operationId": "createPost",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to list posts",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Post" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/posts/{post_id}": {
+      "put": {
+        "tags": ["posts"],
+        "summary": "Update post in thread",
+        "description": "",
+        "operationId": "updatePost",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Post" }
+          },
+          {
+            "name": "post_id",
+            "in": "path",
+            "description": "ID of the post to update",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/posts/view/{post_id}": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "List posts in thread",
+        "description": "",
+        "operationId": "listPosts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "description": "ID of the post to view",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/posts/{post_id}/page": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "Get page number for page",
+        "description": "",
+        "operationId": "getPostPage",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "description": "ID of the post to get page number for",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many posts per page",
+            "required": false,
+            "type": "integer",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/posts/{post_id}/read": {
+      "post": {
+        "tags": ["posts"],
+        "summary": "Mark posts in thread read up to this post",
+        "description": "",
+        "operationId": "markPostRead",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "description": "ID of the post to mark read",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
       }
     }
   },
@@ -856,6 +1091,14 @@
         "reason": { "type": "string", "example": "This person acted really bad." }
       },
       "xml": { "name": "Offense" }
+    },
+    "Post": {
+      "type": "object",
+      "required": ["body"],
+      "properties": {
+        "body": { "type": "string", "example": "Hey guys i'm new here lol." }
+      },
+      "xml": { "name": "Post" }
     }
   },
   "externalDocs": {
