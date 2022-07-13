@@ -1787,6 +1787,390 @@
         },
         "security": [{ "bearer-token": [] }]
       }
+    },
+    "/threads/{forum_id}": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "List threads in forum",
+        "description": "",
+        "operationId": "listThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "forum_id",
+            "in": "path",
+            "description": "ID of the forum to list threads",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/threads": {
+      "post": {
+        "tags": ["threads"],
+        "summary": "Create thread",
+        "description": "",
+        "operationId": "createThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Thread information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Thread" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/{thread_id}": {
+      "put": {
+        "tags": ["threads"],
+        "summary": "Update thread",
+        "description": "",
+        "operationId": "updateThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Thread information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/UpdateThread" }
+          },
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to update",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      },
+      "delete": {
+        "tags": ["threads"],
+        "summary": "Delete a thread",
+        "description": "",
+        "operationId": "deleteThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to be deleted",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/{thread_id}/rename": {
+      "put": {
+        "tags": ["threads"],
+        "summary": "Rename thread",
+        "description": "",
+        "operationId": "renameThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Thread information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/RenameThread" }
+          },
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to rename",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/view/{thread_id}": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "View thread",
+        "description": "",
+        "operationId": "viewThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to view",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/recent": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "List recent threads",
+        "description": "",
+        "operationId": "listRecentThreads",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Count of recent threads to return",
+            "type": "integer",
+            "default": 5,
+            "maximum": 20,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/trending": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "List trending threads",
+        "description": "",
+        "operationId": "listTrendingThreads",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Count of trending threads from past 7 days to return",
+            "type": "integer",
+            "default": 5,
+            "maximum": 20,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/favorites": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "List favorite threads",
+        "description": "",
+        "operationId": "listFavoriteThreads",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of offenses to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many offenses to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/{thread_id}/favorite": {
+      "post": {
+        "tags": ["threads"],
+        "summary": "Favorite thread",
+        "description": "",
+        "operationId": "favoriteThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to favorite",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/{thread_id}/unfavorite": {
+      "post": {
+        "tags": ["threads"],
+        "summary": "Unfavorite thread",
+        "description": "",
+        "operationId": "unfavoriteThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to unfavorite",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
     }
   },
   "securityDefinitions": {
@@ -1969,7 +2353,7 @@
       "properties": {
         "body": { "type": "string", "example": "Hey how are you? Let's chat!" },
         "icon_id": { "type": "integer", "example": 12 },
-        "recipient_id": { "type": "interger", "example": 14 },
+        "recipient_id": { "type": "integer", "example": 14 },
         "title": { "type": "string", "example": "Hiya!" }
       },
       "xml": { "name": "PrivateMessageThread" }
@@ -2014,6 +2398,17 @@
       },
       "xml": { "name": "Register" }
     },
+    "RenameThread": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "My New Title"
+        }
+      },
+      "xml": { "name": "RenameThread" }
+    },
     "Report": {
       "type": "object",
       "required": ["body"],
@@ -2044,6 +2439,25 @@
       },
       "xml": { "name": "ResetPassword" }
     },
+    "Thread": {
+      "type": "object",
+      "required": ["title", "forum_id", "body"],
+      "properties": {
+        "body": {
+          "type": "string",
+          "example": "Hi welcome to my thread. Let's discuss general things."
+        },
+        "forum_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "title": {
+          "type": "string",
+          "example": "My General Thread"
+        }
+      },
+      "xml": { "name": "Thread" }
+    },
     "UpdateOffense": {
       "type": "object",
       "required": [],
@@ -2065,6 +2479,29 @@
         }
       },
       "xml": { "name": "UpdateReport" }
+    },
+    "UpdateThread": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "forum_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "icon_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "is_closed": {
+          "type": "boolean",
+          "example": true
+        },
+        "is_sticky": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      "xml": { "name": "UpdateThread" }
     }
   }
 }
