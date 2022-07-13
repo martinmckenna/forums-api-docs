@@ -5,6 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    rapi-doc::part(btn){ border-radius: 15px; }
+    rapi-doc::part(btn-try) {
+      background-color: yellow;
+      color: #333;
+      border-color: yellow;
+    }
+    rapi-doc::part(btn-selected-response-status) {
+      background-color: yellow;
+      color: #333;
+      border-color: yellow;
+    }
+    rapi-doc::part(section-navbar) {
+      padding-bottom: 50px;
+    }
+  </style>
   <title>API Docs | Basement Community</title>
 </head>
 <body>
@@ -20,6 +37,9 @@
     font-size="largest"
     show-method-in-nav-bar="as-colored-block"
     nav-text-color="#d6d5d5"
-  ></rapi-doc>
+  >
+    <img slot="nav-logo" src="/gunch_180x180-100.jpg" style="width:100px; height:100px; margin: 0 auto;"/>
+    <footer slot="footer" style="height:100px;"></footer>
+  </rapi-doc>
 </body>
 </html>
