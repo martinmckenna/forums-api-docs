@@ -76,11 +76,11 @@
         "responses": {
           "200": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseAccountSetting" }
           },
           "400": {
             "description": "successful operation",
-            "schema": { "$ref": "#/definitions/APIError" }
+            "schema": { "$ref": "#/definitions/ResponseAccountSetting" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -2618,6 +2618,28 @@
         }
       },
       "xml": { "name": "ResetPassword" }
+    },
+    "ResponseAccountSetting": {
+      "type": "object",
+      "properties": {
+        "dark_mode": {
+          "type": "boolean",
+          "example": true
+        },
+        "timezone": {
+          "type": "string",
+          "example": "America/New_York"
+        },
+        "user_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseAccountSetting" }
     },
     "Thread": {
       "type": "object",
