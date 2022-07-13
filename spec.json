@@ -75,12 +75,10 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ResponseAccountSetting" }
           },
           "400": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ResponseAccountSetting" }
+            "schema": { "$ref": "#/definitions/APIError" }
           }
         },
         "security": [{ "bearer-token": [] }]
@@ -103,11 +101,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseAccountSetting" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -125,11 +121,9 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseCategoryList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -152,11 +146,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseCategory" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -191,11 +183,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseCategory" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -221,11 +211,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -243,11 +231,9 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseForumList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -270,11 +256,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseForum" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -309,11 +293,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseForum" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -339,11 +321,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -369,11 +349,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseIcon" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -408,11 +386,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseIcon" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -438,11 +414,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseProfile" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -484,11 +458,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseMentionList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -516,11 +488,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseMention" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -562,11 +532,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffenseList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -590,11 +558,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffense" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -622,11 +588,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffense" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -668,11 +632,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffense" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -698,11 +660,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -744,11 +704,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffenseList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -797,11 +755,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffenseList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -850,11 +806,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponseOffenseList" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -905,11 +859,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -941,11 +893,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -980,11 +930,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1012,11 +960,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1052,11 +998,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1083,11 +1027,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1129,11 +1071,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1157,11 +1097,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1189,11 +1127,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1221,11 +1157,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1258,11 +1192,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1290,11 +1222,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1331,11 +1261,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1363,11 +1291,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1385,11 +1311,9 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1413,11 +1337,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1443,11 +1365,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1472,11 +1392,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1493,11 +1411,9 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1523,11 +1439,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1559,11 +1473,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1581,11 +1493,9 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1648,11 +1558,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1676,11 +1584,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1708,11 +1614,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1745,11 +1649,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1777,11 +1679,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1825,11 +1725,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         }
@@ -1854,11 +1752,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1893,11 +1789,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1923,11 +1817,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1962,11 +1854,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -1994,11 +1884,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2026,11 +1914,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2058,11 +1944,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2097,11 +1981,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2129,11 +2011,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2161,11 +2041,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2191,11 +2069,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2230,11 +2106,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2269,11 +2143,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2301,11 +2173,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2333,11 +2203,9 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/ApiResponse" }
           },
           "400": {
-            "description": "successful operation",
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
@@ -2360,6 +2228,10 @@
         "type": { "type": "string" },
         "message": { "type": "string" }
       }
+    },
+    "EmptyResponse": {
+      "type": "object",
+      "properties": {}
     },
     "APIError": {
       "type": "array",
@@ -2640,6 +2512,267 @@
         }
       },
       "xml": { "name": "ResponseAccountSetting" }
+    },
+    "ResponseCategory": {
+      "type": "object",
+      "properties": {
+        "is_deleted": {
+          "type": "boolean",
+          "example": true
+        },
+        "description": {
+          "type": "string",
+          "example": "Containing general-purpose forums"
+        },
+        "title": {
+          "type": "string",
+          "example": "General"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseCategory" }
+    },
+    "ResponseCategoryList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseCategory"
+      },
+      "xml": { "name": "ResponseCategoryList" }
+    },
+    "ResponseForum": {
+      "type": "object",
+      "properties": {
+        "is_deleted": {
+          "type": "boolean",
+          "example": true
+        },
+        "mod_only": {
+          "type": "boolean",
+          "example": true
+        },
+        "description": {
+          "type": "string",
+          "example": "For all sports-related discussion"
+        },
+        "icon_image_url": {
+          "type": "string",
+          "example": "images.basementcommunity.com/icons/100x100.png"
+        },
+        "parent_forum_id": {
+          "type": ["integer", "null"],
+          "example": null
+        },
+        "moderators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "dril"
+              },
+              "id": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        },
+        "category_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Sports"
+        },
+        "icon_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "is_hidden": {
+          "type": "boolean",
+          "example": false
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseForum" }
+    },
+    "ResponseForumList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseForum"
+      },
+      "xml": { "name": "ResponseForumList" }
+    },
+    "ResponseIcon": {
+      "type": "object",
+      "properties": {
+        "image_url": {
+          "type": "string",
+          "example": "images.basementcommunity.com/icons/100x100.png"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseIcon" }
+    },
+    "ResponseMention": {
+      "type": "object",
+      "properties": {
+        "read": {
+          "type": "boolean",
+          "example": true
+        },
+        "post_id": {
+          "type": "integer",
+          "example": 2
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2022-07-13T05:57:16Z"
+        },
+        "author_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "thread_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "recipient_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "author_username": {
+          "type": "string",
+          "example": "marty"
+        },
+        "thread_title": {
+          "type": "string",
+          "example": "My Thread"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseMention" }
+    },
+    "ResponseMentionList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseMention"
+      },
+      "xml": { "name": "ResponseMentionList" }
+    },
+    "ResponseOffense": {
+      "type": "object",
+      "properties": {
+        "requested_user_username": {
+          "type": "string",
+          "example": "dril"
+        },
+        "requested_user_id": {
+          "type": "integer",
+          "example": 2
+        },
+        "closed_user_username": {
+          "type": ["string", "null"],
+          "example": null
+        },
+        "closed_user_id": { "type": ["integer", "null"], "example": null },
+        "created_at": {
+          "type": "string",
+          "example": "2022-07-13T05:57:16Z"
+        },
+        "is_ban": {
+          "type": "boolean",
+          "example": false
+        },
+        "private_message_post_id": {
+          "type": ["integer", "null"],
+          "example": null
+        },
+        "post_id": {
+          "type": ["integer", "null"],
+          "example": 12
+        },
+        "end_time": {
+          "type": "string",
+          "example": "2022-08-04T11:25:19Z"
+        },
+        "approved_user_username": {
+          "type": "string",
+          "example": "marty"
+        },
+        "approved_user_id": { "type": ["integer", "null"], "example": 1 },
+        "reason": {
+          "type": "string",
+          "example": "This person acted really bad."
+        },
+        "thread_id": { "type": ["integer", "null"], "example": 33 },
+        "offender_username": { "type": "string", "example": "greg" },
+        "offender_user_id": { "type": "integer", "example": 2 },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponseOffense" }
+    },
+    "ResponseOffenseList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseOffense"
+      },
+      "xml": { "name": "ResponseOffenseList" }
+    },
+    "ResponseProfile": {
+      "type": "object",
+      "properties": {
+        "bio": { "type": "string", "example": "i am from new york city" },
+        "byline": {
+          "type": "string",
+          "example": "This is what appears under your avatar"
+        },
+        "registerd_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
+        "avatar_url": {
+          "type": "string",
+          "example": "images.basementcommunity.com/avatars/60x60.png"
+        },
+        "id": { "type": "integer", "example": 2 },
+        "discord": { "type": "string", "example": "@someguy" },
+        "email": { "type": "string", "example": "hello@gmail.com" },
+        "gender": { "type": "string", "example": "female" },
+        "forums_moderating": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string", "example": "Sports Forum" },
+              "id": { "type": "integer", "example": 1 }
+            }
+          }
+        },
+        "admin": { "type": "boolean", "example": false },
+        "username": { "type": "string", "example": "marty" },
+        "other_link": { "type": "string", "example": "github.com/hello" },
+        "twitter": { "type": "string", "example": "@dril" }
+      },
+      "xml": { "name": "ResponseProfile" }
     },
     "Thread": {
       "type": "object",
