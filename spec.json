@@ -859,7 +859,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePostList" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -893,7 +893,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -930,7 +930,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -942,7 +942,7 @@
     "/posts/view/{post_id}": {
       "get": {
         "tags": ["posts"],
-        "summary": "List posts in thread",
+        "summary": "View post",
         "description": "",
         "operationId": "listPosts",
         "consumes": ["application/json"],
@@ -960,7 +960,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -998,7 +998,12 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page": { "type": "integer", "example": 2 }
+              }
+            }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1027,7 +1032,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1071,7 +1076,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessageThreadList" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1097,7 +1102,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessageThread" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1127,7 +1132,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessageThread" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1157,7 +1162,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessagePostList" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1192,7 +1197,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessagePost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1222,7 +1227,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/ResponsePrivateMessagePost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1261,7 +1266,10 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": {
+              "type": "object",
+              "properties": { "page": { "type": "integer", "example": 2 } }
+            }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -1291,7 +1299,7 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ApiResponse" }
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -2559,7 +2567,7 @@
           "example": "For all sports-related discussion"
         },
         "icon_image_url": {
-          "type": "string",
+          "type": ["string", "null"],
           "example": "images.basementcommunity.com/icons/100x100.png"
         },
         "parent_forum_id": {
@@ -2591,7 +2599,7 @@
           "example": "Sports"
         },
         "icon_id": {
-          "type": "integer",
+          "type": ["integer", "null"],
           "example": 12
         },
         "is_hidden": {
@@ -2670,10 +2678,17 @@
       "xml": { "name": "ResponseMention" }
     },
     "ResponseMentionList": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "$ref": "#/definitions/ResponseMention"
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponseMention"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
       },
       "xml": { "name": "ResponseMentionList" }
     },
@@ -2733,12 +2748,262 @@
       "xml": { "name": "ResponseOffense" }
     },
     "ResponseOffenseList": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "$ref": "#/definitions/ResponseOffense"
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponseOffense"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
       },
       "xml": { "name": "ResponseOffenseList" }
+    },
+    "ResponsePost": {
+      "type": "object",
+      "properties": {
+        "author_avatar_url": {
+          "type": ["string", "null"],
+          "example": "images.basementcommunity.com/avatars/60x60.png"
+        },
+        "thread_title": {
+          "type": "string",
+          "example": "Talk about things"
+        },
+        "author_username": {
+          "type": "string",
+          "example": "marty"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2022-08-04T11:34:00Z"
+        },
+        "author_byline": {
+          "type": "string",
+          "example": "i'm the best"
+        },
+        "offenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "end_time": {
+                "type": "string",
+                "example": "2022-08-04T11:34:00Z"
+              },
+              "is_ban": {
+                "type": "boolean",
+                "example": false
+              },
+              "id": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        },
+        "author_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "thread_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "body": {
+          "type": "string",
+          "example": "hey @dril how are you?"
+        },
+        "author_registered_on": {
+          "type": "string",
+          "example": "2022-07-12T05:17:24Z"
+        },
+        "posted_at": {
+          "type": "string",
+          "example": "2022-07-12T05:17:24Z"
+        },
+        "forum_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "forum_title": {
+          "type": "General",
+          "example": 1
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponsePost" }
+    },
+    "ResponsePostList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponsePost"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
+      },
+      "xml": { "name": "ResponsePostList" }
+    },
+    "ResponsePrivateMessagePost": {
+      "type": "object",
+      "properties": {
+        "author_avatar_url": {
+          "type": ["string", "null"],
+          "example": "images.basementcommunity.com/avatars/60x60.png"
+        },
+        "author_username": {
+          "type": "string",
+          "example": "marty"
+        },
+        "author_byline": {
+          "type": "string",
+          "example": "i'm the best"
+        },
+        "offenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "end_time": {
+                "type": "string",
+                "example": "2022-08-04T11:34:00Z"
+              },
+              "is_ban": {
+                "type": "boolean",
+                "example": false
+              },
+              "id": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        },
+        "author_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "private_message_thread_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "body": {
+          "type": "string",
+          "example": "hey @dril how are you?"
+        },
+        "author_registered_on": {
+          "type": "string",
+          "example": "2022-07-12T05:17:24Z"
+        },
+        "posted_at": {
+          "type": "string",
+          "example": "2022-07-12T05:17:24Z"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponsePrivateMessagePost" }
+    },
+    "ResponsePrivateMessagePostList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponsePrivateMessagePost"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
+      },
+      "xml": { "name": "ResponsePrivateMessagePostList" }
+    },
+    "ResponsePrivateMessageThread": {
+      "type": "object",
+      "properties": {
+        "author_username": {
+          "type": "string",
+          "example": "marty"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2022-08-04T11:34:00Z"
+        },
+        "recipient_username": {
+          "type": "string",
+          "example": "dril"
+        },
+        "last_post_at": {
+          "type": "string",
+          "example": "2022-07-13T19:19:53Z"
+        },
+        "total_posts": {
+          "type": "integer",
+          "example": 3
+        },
+        "number_posts_read": {
+          "type": "integer",
+          "example": 1
+        },
+        "author_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "recipient_id": {
+          "type": "integer",
+          "example": 3
+        },
+        "icon_image_url": {
+          "type": ["string", "null"],
+          "example": "images.basementcommunity.com/icons/100x100.png"
+        },
+        "icon_id": {
+          "type": ["integer", "null"],
+          "example": 12
+        },
+        "last_read_post_id": {
+          "type": ["integer", "null"],
+          "example": 23
+        },
+        "title": {
+          "type": "string",
+          "example": "Hello"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      "xml": { "name": "ResponsePrivateMessageThread" }
+    },
+    "ResponsePrivateMessageThreadList": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponsePrivateMessageThread"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
+      },
+      "xml": { "name": "ResponsePrivateMessageThreadList" }
     },
     "ResponseProfile": {
       "type": "object",
@@ -2750,7 +3015,7 @@
         },
         "registerd_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
         "avatar_url": {
-          "type": "string",
+          "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
         "id": { "type": "integer", "example": 2 },
