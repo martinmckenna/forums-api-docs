@@ -2171,6 +2171,178 @@
         },
         "security": [{ "bearer-token": [] }]
       }
+    },
+    "/users/{username}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "View user",
+        "description": "",
+        "operationId": "viewUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username of the user to view",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/users/{user_id}/promote/mod": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Promote user to moderator",
+        "description": "",
+        "operationId": "promoteUserToMod",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to promote",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PromoteMod" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/users/{user_id}/demote/mod": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Demote user from moderator",
+        "description": "",
+        "operationId": "demoteUserFromMod",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to demote",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User information",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PromoteMod" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/users/{user_id}/promote/admin": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Promote user to admin",
+        "description": "",
+        "operationId": "promoteUserToAdmin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to promote",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/users/{user_id}/demote/admin": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Demote user from admin",
+        "description": "",
+        "operationId": "demoteUserFromAdmin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to demote",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/ApiResponse" }
+          },
+          "400": {
+            "description": "successful operation",
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
     }
   },
   "securityDefinitions": {
@@ -2362,7 +2534,7 @@
       "type": "object",
       "required": [],
       "properties": {
-        "bio": { "type": "integer", "example": "i am from new york city" },
+        "bio": { "type": "string", "example": "i am from new york city" },
         "byline": {
           "type": "string",
           "example": "This is what appears under your avatar"
@@ -2374,6 +2546,14 @@
         "twitter": { "type": "string", "example": "@dril" }
       },
       "xml": { "name": "Profile" }
+    },
+    "PromoteMod": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "forum_id": { "type": "integer", "example": 12 }
+      },
+      "xml": { "name": "PromoteMod" }
     },
     "Register": {
       "type": "object",
