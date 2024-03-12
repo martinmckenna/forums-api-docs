@@ -236,7 +236,8 @@
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        }
+        },
+        "security": [{}, { "bearer-token": [] }]
       },
       "post": {
         "tags": ["forums"],
@@ -330,7 +331,25 @@
         "security": [{ "bearer-token": [] }]
       }
     },
-    "/icon": {
+    "/icons": {
+      "get": {
+        "tags": ["images"],
+        "summary": "List icons",
+        "description": "",
+        "operationId": "listIcons",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseIconList" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{}, { "bearer-token": [] }]
+      },
       "post": {
         "tags": ["images"],
         "summary": "Create Icon",
@@ -358,7 +377,7 @@
         "security": [{ "bearer-token": [] }]
       }
     },
-    "/icon/{icon_id}": {
+    "/icons/{icon_id}": {
       "put": {
         "tags": ["images"],
         "summary": "Update Icon",
@@ -2275,8 +2294,52 @@
       "type": "object",
       "required": [],
       "properties": {
-        "dark_mode": { "type": "boolean", "example": true },
-        "timezone": { "type": "string", "example": "America/New_York" }
+        "theme": {
+          "type": "string",
+          "enum": ["dark", "light"],
+          "example": "dark"
+        },
+        "timezone": {
+          "type": "string",
+          "example": "America/New_York"
+        },
+        "user_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "homepage_view": {
+          "type": "string",
+          "enum": ["classic", "all_threads"],
+          "example": "classic"
+        },
+        "posting_hints": {
+          "type": "boolean",
+          "example": true
+        },
+        "embeds_enabled": {
+          "type": "boolean",
+          "example": true
+        },
+        "avatars_enabled": {
+          "type": "boolean",
+          "example": true
+        },
+        "auto_favorite_thread": {
+          "type": "boolean",
+          "example": true
+        },
+        "anchor_page": {
+          "type": "boolean",
+          "example": true
+        },
+        "bionic_reading": {
+          "type": "boolean",
+          "example": true
+        }
       },
       "xml": { "name": "Account" }
     },
@@ -2288,6 +2351,10 @@
         "description": {
           "type": "string",
           "example": "This category is for general forums"
+        },
+        "sort_order": {
+          "type": "integer",
+          "example": 1
         }
       },
       "xml": { "name": "Category" }
@@ -2300,6 +2367,10 @@
         "description": {
           "type": "string",
           "example": "This category is for general forums"
+        },
+        "sort_order": {
+          "type": "integer",
+          "example": 1
         }
       },
       "xml": { "name": "CategoryID" }
@@ -2331,7 +2402,12 @@
           "example": 12
         },
         "is_deleted": { "type": "boolean", "example": true },
-        "icon_id": { "type": "integer", "format": "int32", "example": 12 }
+        "icon_id": { "type": "integer", "format": "int32", "example": 12 },
+        "sort_order": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
       },
       "xml": { "name": "Forum" }
     },
@@ -2353,7 +2429,12 @@
           "example": 12
         },
         "is_deleted": { "type": "boolean", "example": true },
-        "icon_id": { "type": "integer", "format": "int32", "example": 12 }
+        "icon_id": { "type": "integer", "format": "int32", "example": 12 },
+        "sort_order": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
       },
       "xml": { "name": "Forum" }
     },
@@ -2510,9 +2591,10 @@
     "ResponseAccountSetting": {
       "type": "object",
       "properties": {
-        "dark_mode": {
-          "type": "boolean",
-          "example": true
+        "theme": {
+          "type": "string",
+          "enum": ["dark", "light"],
+          "example": "dark"
         },
         "timezone": {
           "type": "string",
@@ -2525,6 +2607,35 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "homepage_view": {
+          "type": "string",
+          "enum": ["classic", "all_threads"],
+          "example": "classic"
+        },
+        "posting_hints": {
+          "type": "boolean",
+          "example": true
+        },
+        "embeds_enabled": {
+          "type": "boolean",
+          "example": true
+        },
+        "avatars_enabled": {
+          "type": "boolean",
+          "example": true
+        },
+        "auto_favorite_thread": {
+          "type": "boolean",
+          "example": true
+        },
+        "anchor_page": {
+          "type": "boolean",
+          "example": true
+        },
+        "bionic_reading": {
+          "type": "boolean",
+          "example": true
         }
       },
       "xml": { "name": "ResponseAccountSetting" }
@@ -2545,6 +2656,10 @@
           "example": "General"
         },
         "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "sort_order": {
           "type": "integer",
           "example": 1
         }
@@ -2617,6 +2732,35 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "sort_order": {
+          "type": "integer",
+          "example": 1
+        },
+        "latest_post": {
+          "type": "object",
+          "properties": {
+            "thread_title": {
+              "type": "string",
+              "example": "count to 100"
+            },
+            "thread_id": {
+              "type": "integer",
+              "example": 237
+            },
+            "post_id": {
+              "type": "integer",
+              "example": 2337
+            },
+            "author_username": {
+              "type": "string",
+              "example": "orchids"
+            },
+            "updated_at": {
+              "type": "string",
+              "example": "2024-03-09T10:11:32.431965Z"
+            }
+          }
         }
       },
       "xml": { "name": "ResponseForum" }
@@ -2639,9 +2783,21 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "is_forum": {
+          "type": "boolean",
+          "example": false
         }
       },
       "xml": { "name": "ResponseIcon" }
+    },
+    "ResponseIconList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseIcon"
+      },
+      "xml": { "name": "ResponseIconList" }
     },
     "ResponseMention": {
       "type": "object",
@@ -2672,7 +2828,7 @@
         },
         "author_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "thread_title": {
           "type": "string",
@@ -3021,7 +3177,7 @@
           "type": "string",
           "example": "This is what appears under your avatar"
         },
-        "registerd_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
+        "registered_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
         "avatar_url": {
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
@@ -3041,9 +3197,36 @@
           }
         },
         "admin": { "type": "boolean", "example": false },
-        "username": { "type": "string", "example": "marty" },
+        "username": { "type": "string", "example": "orchids" },
         "other_link": { "type": "string", "example": "github.com/hello" },
-        "twitter": { "type": "string", "example": "@dril" }
+        "twitter": { "type": "string", "example": "@dril" },
+        "mastadon": { "type": "string", "example": "@dril" },
+        "account_enabled": { "type": "boolean", "example": false },
+        "avatar_height": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
+        "avatar_width": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
+        "rank": { "type": "integer", "example": 2 },
+        "offense": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer", "example": 1 },
+            "is_ban": { "type": "boolean", "example": false },
+            "end_time": { "type": "string", "example": "2024-04-11T10:29:29.199231Z" },
+            "created_at": { "type": "string", "example": "2024-03-12T10:29:29.201049Z" },
+            "reason": { "type": "string", "example": "racist content" },
+            "post_id": { "type": ["integer", "null"], "example": 143 },
+            "private_message_post_id": { "type": ["integer", "null"], "example": null },
+            "approved_user_id": { "type": ["integer", "null"], "example": 143 },
+            "requested_user_id": { "type": ["integer", "null"], "example": 143 },
+            "closed_user_id": { "type": ["integer", "null"], "example": null },
+            "offender_id": { "type": "integer", "example": 543 }
+          }
+        }
       },
       "xml": { "name": "ResponseProfile" }
     },
