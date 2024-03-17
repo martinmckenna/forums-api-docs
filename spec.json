@@ -1715,11 +1715,31 @@
           "200": {
             "schema": {
               "type": "object",
-              "token:": {
+              "token": {
                 "type": "string",
                 "example": "eyJ0eXAiO1NiJ9.eyJleHAiOjE2ViIjoxfQ.c3_Jh8jH3g3WxrSs"
               }
             }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/deactivate": {
+      "post": {
+        "tags": ["profile"],
+        "summary": "Deactivate account",
+        "description": "Deactivates account and blanks out all user's posts",
+        "operationId": "deactivateAccount",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/EmptyResponse" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -2713,7 +2733,8 @@
         "email": { "type": "string", "example": "hello@gmail.com" },
         "gender": { "type": "string", "example": "female" },
         "other_link": { "type": "string", "example": "github.com/hello" },
-        "twitter": { "type": "string", "example": "@dril" }
+        "twitter": { "type": "string", "example": "@dril" },
+        "mastadon": { "type": "string", "example": "https://mastadon.com/@someguy" }
       },
       "xml": { "name": "Profile" }
     },
@@ -3537,7 +3558,7 @@
         },
         "rank": { "type": "integer", "example": 2 },
         "offense": {
-          "type": "object",
+          "type": ["object", "null"],
           "properties": {
             "id": { "type": "integer", "example": 1 },
             "is_ban": { "type": "boolean", "example": false },
@@ -3571,6 +3592,14 @@
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
+        "avatar_height": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
+        "avatar_width": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
         "id": { "type": "integer", "example": 2 },
         "discord": { "type": "string", "example": "@someguy" },
         "email": { "type": "string", "example": "hello@gmail.com" },
@@ -3586,13 +3615,35 @@
           }
         },
         "admin": { "type": "boolean", "example": false },
-        "username": { "type": "string", "example": "marty" },
+        "username": { "type": "string", "example": "orchids" },
         "other_link": { "type": "string", "example": "github.com/hello" },
         "twitter": { "type": "string", "example": "@dril" },
-        "token:": {
+        "token": {
           "type": "string",
           "example": "eyJ0eXAiO1NiJ9.eyJleHAiOjE2ViIjoxfQ.c3_Jh8jH3g3WxrSs"
-        }
+        },
+        "registered_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
+        "mastadon": { "type": "string", "example": "https://mastadon.com/@someguy" },
+        "offense": {
+          "type": ["object", "null"],
+          "properties": {
+            "id": { "type": "integer", "example": 1 },
+            "is_ban": { "type": "boolean", "example": false },
+            "end_time": { 
+              "type": ["string", "null"], 
+              "example": "2024-04-11T10:29:29.199231Z" 
+            },
+            "created_at": { "type": "string", "example": "2024-03-12T10:29:29.201049Z" },
+            "reason": { "type": "string", "example": "racist content" },
+            "post_id": { "type": ["integer", "null"], "example": 143 },
+            "private_message_post_id": { "type": ["integer", "null"], "example": null },
+            "approved_user_id": { "type": ["integer", "null"], "example": 143 },
+            "requested_user_id": { "type": ["integer", "null"], "example": 143 },
+            "closed_user_id": { "type": ["integer", "null"], "example": null },
+            "offender_id": { "type": "integer", "example": 543 }
+          }
+        },
+        "account_enabled": { "type": "boolean", "example": false }
       },
       "xml": { "name": "ResponseProfile" }
     },
@@ -3624,7 +3675,7 @@
           }
         },
         "admin": { "type": "boolean", "example": false },
-        "username": { "type": "string", "example": "marty" },
+        "username": { "type": "string", "example": "orchids" },
         "other_link": { "type": "string", "example": "github.com/hello" },
         "twitter": { "type": "string", "example": "@dril" },
         "offense": {
@@ -3683,7 +3734,7 @@
         "created_at": { "type": "string", "example": "2022-07-13T20:48:09Z" },
         "owner_username": {
           "type": ["string", "null"],
-          "example": "marty"
+          "example": "orchids"
         },
         "owner_id": {
           "type": ["integer", "null"],
@@ -3765,7 +3816,7 @@
         },
         "author_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "last_post_at": {
           "type": "string",
