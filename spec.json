@@ -1,16 +1,16 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "# Welcome to the Basement Community API Docs \n To get started, you'll want to make an account on either basementcommunity.com or use the /register endpoint to register an account. From there, you can take the `token` from the response, plug it in to the _Authentication_ section below, and start authorizing your requests. \n\n The base URL we will be using here is `api.basementcommunity.com`",
+    "description": "# Welcome to the Basement Community API Docs \n To get started, you'll want to make an account on either https://basementcommunity.com or use the /register endpoint to register an account. From there, you can take the `token` from the response, plug it in to the _Authentication_ section in the side navigation , and start authorizing your requests. \n\n The base URL we will be using here is `api.basementcommunity.com`",
     "version": "1.0.0",
     "title": "Basement Community",
-    "contact": { "email": "" },
+    "contact": { "email": "orchids@basementcommunity.com" },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "api.staging.basementcommunity.com",
+  "host": "api.basementcommunity.com",
   "basePath": "",
   "tags": [
     {
