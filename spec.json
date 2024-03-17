@@ -557,7 +557,7 @@
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
-        "security": [{ "bearer-token": [] }]
+        "security": [{}, { "bearer-token": [] }]
       },
       "post": {
         "tags": ["offenses"],
@@ -624,13 +624,6 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "Offense information",
-            "required": true,
-            "schema": { "$ref": "#/definitions/UpdateOffense" }
-          },
-          {
             "name": "offense_id",
             "in": "path",
             "description": "ID of the offense to be updated",
@@ -688,42 +681,18 @@
         "security": [{ "bearer-token": [] }]
       }
     },
-    "/offenses/own": {
+    "/offenses/pending/counts": {
       "get": {
         "tags": ["offenses"],
-        "summary": "List my offenses",
+        "summary": "List pending offense counts",
         "description": "",
-        "operationId": "viewMyOffenses",
+        "operationId": "viewPendingOffenseCounts",
         "consumes": ["application/json"],
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "active_only",
-            "in": "query",
-            "description": "Offenses that are currently active",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page of offenses to get",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "name": "per_page",
-            "in": "query",
-            "description": "How many offenses to get per page",
-            "required": false,
-            "type": "integer",
-            "default": 25,
-            "maximum": 100
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ResponseOffenseList" }
+            "schema": { "$ref": "#/definitions/ResponsePendingOffenseCounts" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -2889,12 +2858,12 @@
           "example": 12
         },
         "end_time": {
-          "type": "string",
+          "type": ["string", "null"],
           "example": "2022-08-04T11:25:19Z"
         },
         "approved_user_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "approved_user_id": { "type": ["integer", "null"], "example": 1 },
         "reason": {
@@ -2902,9 +2871,13 @@
           "example": "This person acted really bad."
         },
         "thread_id": { "type": ["integer", "null"], "example": 33 },
-        "offender_username": { "type": "string", "example": "greg" },
-        "offender_user_id": { "type": "integer", "example": 2 },
+        "private_message_thread_id": { "type": ["integer", "null"], "example": null },
+        "offender_user_username": { "type": "string", "example": "greg" },
         "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "offender_id": {
           "type": "integer",
           "example": 1
         }
@@ -2925,6 +2898,30 @@
         "total_results": { "type": "integer", "example": 26 }
       },
       "xml": { "name": "ResponseOffenseList" }
+    },
+    "ResponsePendingOffenseCounts": {
+      "type": "object",
+      "properties": {
+      },
+      "additionalProperties": {
+        "type": "number"
+      },
+      "example":{
+        "PMs": 0,
+        "general": 0,
+        "video games": 0,
+        "food, drink, fitness": 0,
+        "music": 0,
+        "software": 0,
+        "technical feedback": 0,
+        "art and ish": 0,
+        "community feedback": 0,
+        "tv, film, and video": 0,
+        "the library": 0,
+        "welcomes": 0,
+        "lists and logs": 0
+      },
+      "xml": { "name": "ResponseOffense" }
     },
     "ResponsePost": {
       "type": "object",
@@ -3216,7 +3213,10 @@
           "properties": {
             "id": { "type": "integer", "example": 1 },
             "is_ban": { "type": "boolean", "example": false },
-            "end_time": { "type": "string", "example": "2024-04-11T10:29:29.199231Z" },
+            "end_time": { 
+              "type": ["string", "null"], 
+              "example": "2024-04-11T10:29:29.199231Z" 
+            },
             "created_at": { "type": "string", "example": "2024-03-12T10:29:29.201049Z" },
             "reason": { "type": "string", "example": "racist content" },
             "post_id": { "type": ["integer", "null"], "example": 143 },

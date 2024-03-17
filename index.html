@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+    <!-- <script type="module" src="https://unpkg.com/openapi-explorer/dist/browser/openapi-explorer.min.js"></script> -->
   <!-- <link rel="stylesheet" href="style.css"> -->
   <style>
     rapi-doc::part(btn){ border-radius: 15px; }
@@ -38,10 +39,22 @@
     show-method-in-nav-bar="as-colored-block"
     nav-text-color="#d6d5d5"
   >
-    <!-- <div slot="nav-logo" style="display: flex; align-items: center; justify-content: center;"> 
-      <img src="/gunch_180x180-100.jpg" style="width:100px; height:100px;"/>
-    </div> -->
     <footer slot="footer" style="height:100px;"></footer>
   </rapi-doc>
+  <!-- <openapi-explorer
+    spec-url="/spec.json"
+    header-color="#2d87e2"
+    theme="dark"
+    show-header="false"
+    persist-auth="true"
+    text-color="#d6d5d5"
+    bg-color="#333"
+    primary-color="#1e8dc5"
+    font-size="largest"
+    show-method-in-nav-bar="as-colored-block"
+    nav-text-color="#d6d5d5"
+  >
+    <footer slot="footer" style="height:100px;"></footer>
+  </openapi-explorer> -->
 </body>
 </html>
