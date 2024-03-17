@@ -880,6 +880,72 @@
         "security": [{ "bearer-token": [] }]
       }
     },
+    "/posts": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "List posts by user",
+        "description": "",
+        "operationId": "listPostsByUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "ID of the thread to list posts",
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "ID of the user to list posts",
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "username of the user to list posts",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of posts to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many posts to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          },
+          {
+            "name": "last_page",
+            "in": "query",
+            "description": "Boolean on whether to get the last page of posts",
+            "required": false,
+            "type": "string",
+            "enum": [true, false],
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponsePostList" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
     "/posts/{thread_id}": {
       "get": {
         "tags": ["posts"],
@@ -899,27 +965,29 @@
             "format": "int64"
           },
           {
-            "name": "user_id",
-            "in": "query",
-            "description": "Offenses that are tied to a user",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "name": "page",
             "in": "query",
-            "description": "Page of offenses to get",
+            "description": "Page of posts to get",
             "required": false,
             "type": "integer"
           },
           {
             "name": "per_page",
             "in": "query",
-            "description": "How many offenses to get per page",
+            "description": "How many posts to get per page",
             "required": false,
             "type": "integer",
             "default": 25,
             "maximum": 100
+          },
+          {
+            "name": "last_page",
+            "in": "query",
+            "description": "Boolean on whether to get the last page of posts",
+            "required": false,
+            "type": "string",
+            "enum": [true, false],
+            "default": false
           }
         ],
         "responses": {
@@ -1059,6 +1127,15 @@
             "type": "integer",
             "default": 25,
             "maximum": 100
+          },
+          {
+            "name": "unread",
+            "in": "query",
+            "description": "Boolean on whether to get the page for the post after the one requested in the payload",
+            "required": false,
+            "type": "string",
+            "enum": [true, false],
+            "default": false
           }
         ],
         "responses": {
@@ -1066,7 +1143,8 @@
             "schema": {
               "type": "object",
               "properties": {
-                "page": { "type": "integer", "example": 2 }
+                "page": { "type": "integer", "example": 2 },
+                "first_unread_post_id": { "type": "integer", "example": 25 }
               }
             }
           },
@@ -1104,6 +1182,34 @@
           }
         },
         "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/posts/feed": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "List feed of posts",
+        "description": "",
+        "operationId": "listPostsFeed",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "forum_id",
+            "in": "query",
+            "description": "(optional) ID of the forum to list posts",
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponsePostList" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
       }
     },
     "/privatemessages": {
@@ -3041,13 +3147,21 @@
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
+        "author_avatar_width": {
+          "type": ["number", "null"],
+          "example": 180
+        },
+        "author_avatar_height": {
+          "type": ["number", "null"],
+          "example": 180
+        },
         "thread_title": {
           "type": "string",
           "example": "Talk about things"
         },
         "author_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "updated_at": {
           "type": "string",
@@ -3073,6 +3187,10 @@
               "id": {
                 "type": "integer",
                 "example": 2
+              },
+              "post_id": {
+                "type": "integer",
+                "example": 34
               }
             }
           }
@@ -3108,6 +3226,27 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "author_is_deleted": {
+          "type": "boolean",
+          "example": false
+        },
+        "active_offense": {
+          "type": ["object", "null"],
+          "properties": {
+            "end_time": {
+              "type": "string",
+              "example": "2022-08-04T11:34:00Z"
+            },
+            "is_ban": {
+              "type": "boolean",
+              "example": false
+            },
+            "id": {
+              "type": "integer",
+              "example": 2
+            }
+          }
         }
       },
       "xml": { "name": "ResponsePost" }
