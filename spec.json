@@ -1331,6 +1331,31 @@
             "type": "integer",
             "minimum": 1,
             "format": "int64"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of PMs to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many PMs to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          },
+          {
+            "name": "last_page",
+            "in": "query",
+            "description": "Boolean on whether to get the last page of PMs",
+            "required": false,
+            "type": "string",
+            "enum": [true, false],
+            "default": false
           }
         ],
         "responses": {
@@ -1389,9 +1414,9 @@
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "private_message_thread_id",
+            "name": "private_message_post_id",
             "in": "path",
-            "description": "ID of the PM thread to view post for",
+            "description": "ID of the PM to view",
             "required": true,
             "type": "integer",
             "minimum": 1,
@@ -1435,13 +1460,25 @@
             "type": "integer",
             "default": 25,
             "maximum": 100
+          },
+          {
+            "name": "unread",
+            "in": "query",
+            "description": "Boolean on whether to get the page for the post after the one requested in the payload",
+            "required": false,
+            "type": "string",
+            "enum": [true, false],
+            "default": false
           }
         ],
         "responses": {
           "200": {
             "schema": {
               "type": "object",
-              "properties": { "page": { "type": "integer", "example": 2 } }
+              "properties": {
+                "page": { "type": "integer", "example": 2 },
+                "first_unread_post_id": { "type": "integer", "example": 25 }
+              }
             }
           },
           "400": {
@@ -3273,9 +3310,17 @@
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
+        "author_avatar_height": {
+          "type": ["number", "null"],
+          "example": 180
+        },
+        "author_avatar_width": {
+          "type": ["number", "null"],
+          "example": 180
+        },
         "author_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "author_byline": {
           "type": "string",
@@ -3324,6 +3369,27 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "author_is_deleted": {
+          "type": "boolean",
+          "example": false
+        },
+        "active_offense": {
+          "type": ["object", "null"],
+          "properties": {
+            "end_time": {
+              "type": "string",
+              "example": "2022-08-04T11:34:00Z"
+            },
+            "is_ban": {
+              "type": "boolean",
+              "example": false
+            },
+            "id": {
+              "type": "integer",
+              "example": 2
+            }
+          }
         }
       },
       "xml": { "name": "ResponsePrivateMessagePost" }
@@ -3348,7 +3414,7 @@
       "properties": {
         "author_username": {
           "type": "string",
-          "example": "marty"
+          "example": "orchids"
         },
         "created_at": {
           "type": "string",
@@ -3397,6 +3463,18 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "is_reported": {
+          "type": "boolean",
+          "example": false
+        },
+        "author_is_deleted": {
+          "type": "boolean",
+          "example": false
+        },
+        "recipient_is_deleted": {
+          "type": "boolean",
+          "example": false
         }
       },
       "xml": { "name": "ResponsePrivateMessageThread" }
