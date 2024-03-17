@@ -58,6 +58,18 @@
       "description": "CRUD operations for reports"
     },
     {
+      "name": "search",
+      "description": "Search endpoints"
+    },
+    {
+      "name": "site",
+      "description": "CRUD operations for site information"
+    },
+    {
+      "name": "smileys",
+      "description": "CRUD operations for smileys"
+    },
+    {
       "name": "threads",
       "description": "CRUD operations for threads"
     },
@@ -280,13 +292,12 @@
         "parameters": [],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ResponseForumList" }
+            "schema": { "$ref": "#/definitions/ResponseForumListWithLastPost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        },
-        "security": [{}, { "bearer-token": [] }]
+        }
       },
       "post": {
         "tags": ["forums"],
@@ -327,7 +338,7 @@
           {
             "name": "forum_id",
             "in": "path",
-            "description": "ID of the forum to be updated",
+            "description": "ID of the forum to view",
             "required": true,
             "type": "integer",
             "minimum": 1,
@@ -341,8 +352,7 @@
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        },
-        "security": [{}, { "bearer-token": [] }]
+        }
       },
       "put": {
         "tags": ["forums"],
@@ -424,8 +434,7 @@
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        },
-        "security": [{}, { "bearer-token": [] }]
+        }
       },
       "post": {
         "tags": ["images"],
@@ -633,8 +642,7 @@
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        },
-        "security": [{}, { "bearer-token": [] }]
+        }
       },
       "post": {
         "tags": ["offenses"],
@@ -1010,7 +1018,7 @@
           {
             "name": "thread_id",
             "in": "path",
-            "description": "ID of the thread to list posts",
+            "description": "ID of the thread to create a new post",
             "required": true,
             "type": "integer",
             "minimum": 1,
@@ -1699,7 +1707,7 @@
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
-        "security": [{ "bearer-token": [] }]
+        "security": [{}, { "bearer-token": [] }]
       }
     },
     "/token/extend": {
@@ -1769,33 +1777,37 @@
             "in": "query",
             "description": "Get all of my reports",
             "required": false,
-            "type": "boolean"
+            "type": "string",
+            "enum": ["true", "false"]
           },
           {
             "name": "pm_reports_only",
             "in": "query",
             "description": "Reports tied to PMs",
             "required": false,
-            "type": "boolean"
+            "type": "string",
+            "enum": ["true", "false"]
           },
           {
             "name": "closed_only",
             "in": "query",
             "description": "Closed reports only",
             "required": false,
-            "type": "boolean"
+            "type": "string",
+            "enum": ["true", "false"]
           },
           {
             "name": "page",
             "in": "query",
-            "description": "Page of offenses to get",
+            "description": "Page of reports to get",
             "required": false,
-            "type": "boolean"
+            "type": "integer",
+            "default": 1
           },
           {
             "name": "per_page",
             "in": "query",
-            "description": "How many offenses to get per page",
+            "description": "How many reports to get per page",
             "required": false,
             "type": "integer",
             "default": 25,
@@ -1934,6 +1946,206 @@
         "security": [{ "bearer-token": [] }]
       }
     },
+    "/reports/counts": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "List reports counts",
+        "description": "",
+        "operationId": "viewReportsCounts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponsePendingOffenseCounts" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": ["search"],
+        "summary": "Search posts and threads",
+        "description": "",
+        "operationId": "search",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "query",
+            "description": "Search within a specific thread",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of search results to get",
+            "required": false,
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many search results to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          },
+          {
+            "name": "thread_title_only",
+            "in": "query",
+            "description": "Only search thread titles instead of post bodies",
+            "required": false,
+            "type": "string",
+            "enum": ["true", "false"]
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Only search posts by specific user",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseSearch" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
+    "/smileys": {
+      "get": {
+        "tags": ["smileys"],
+        "summary": "List smileys",
+        "description": "",
+        "operationId": "listSmileys",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseSmileyList" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["smileys"],
+        "summary": "Create Smiley",
+        "description": "",
+        "operationId": "createSmiley",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Smiley to upload",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "in": "formData",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": true,
+              "type": "object",
+              "properties": {
+                "shortcut": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseSmiley" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/smileys/{smiley_id}": {
+      "put": {
+        "tags": ["smileys"],
+        "summary": "Update smiley",
+        "description": "",
+        "operationId": "updateSmiley",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Smiley to upload",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "smiley_id",
+            "in": "path",
+            "description": "ID of the smiley to be updated",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseSmiley" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/stats": {
+      "get": {
+        "tags": ["site"],
+        "summary": "List site stats",
+        "description": "",
+        "operationId": "viewStats",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseStats" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        }
+      }
+    },
     "/threads/{forum_id}": {
       "get": {
         "tags": ["threads"],
@@ -1955,14 +2167,14 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page of offenses to get",
+            "description": "Page of threads to get",
             "required": false,
             "type": "integer"
           },
           {
             "name": "per_page",
             "in": "query",
-            "description": "How many offenses to get per page",
+            "description": "How many threads to get per page",
             "required": false,
             "type": "integer",
             "default": 25,
@@ -1971,15 +2183,67 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ResponseThreadList" }
+            "schema": { "$ref": "#/definitions/ResponseThreadListWithLastPost" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        }
+        },
+        "security": [{}, { "bearer-token": [] }]
       }
     },
     "/threads": {
+      "get": {
+        "tags": ["threads"],
+        "summary": "List all threads",
+        "description": "",
+        "operationId": "listAllThreads",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of threads to get",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "How many threads to get per page",
+            "required": false,
+            "type": "integer",
+            "default": 25,
+            "maximum": 100
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Key to sort by",
+            "required": false,
+            "type": "string",
+            "enum": ["replies", "views", "last_post"]
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "description": "Order to sort by",
+            "required": false,
+            "type": "string",
+            "enum": ["asc", "desc"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseThreadListWithLastPost" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{}, { "bearer-token": [] }]
+      },  
       "post": {
         "tags": ["threads"],
         "summary": "Create thread",
@@ -2136,7 +2400,7 @@
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
-        "security": [{ "bearer-token": [] }]
+        "security": [{}, { "bearer-token": [] }]
       }
     },
     "/threads/recent": {
@@ -2169,7 +2433,7 @@
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
-        "security": [{ "bearer-token": [] }]
+        "security": [{}, { "bearer-token": [] }]
       }
     },
     "/threads/trending": {
@@ -2184,7 +2448,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "Count of trending threads from past 7 days to return",
+            "description": "Count of trending threads to return",
             "type": "integer",
             "default": 5,
             "maximum": 20,
@@ -2202,7 +2466,7 @@
             "schema": { "$ref": "#/definitions/APIError" }
           }
         },
-        "security": [{ "bearer-token": [] }]
+        "security": [{}, { "bearer-token": [] }]
       }
     },
     "/threads/favorites": {
@@ -2217,14 +2481,14 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page of offenses to get",
+            "description": "Page of threads to get",
             "required": false,
             "type": "integer"
           },
           {
             "name": "per_page",
             "in": "query",
-            "description": "How many offenses to get per page",
+            "description": "How many threads to get per page",
             "required": false,
             "type": "integer",
             "default": 25,
@@ -2234,6 +2498,43 @@
         "responses": {
           "200": {
             "schema": { "$ref": "#/definitions/ResponseThreadList" }
+          },
+          "400": {
+            "schema": { "$ref": "#/definitions/APIError" }
+          }
+        },
+        "security": [{ "bearer-token": [] }]
+      }
+    },
+    "/threads/{thread_id}/vote": {
+      "post": {
+        "tags": ["threads"],
+        "summary": "Vote on a thread",
+        "description": "",
+        "operationId": "voteThread",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "thread_id",
+            "in": "path",
+            "description": "ID of the thread to vote on",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Thread rating",
+            "required": true,
+            "schema": { "$ref": "#/definitions/VoteThread" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/ResponseThread" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
@@ -2321,13 +2622,12 @@
         ],
         "responses": {
           "200": {
-            "schema": { "$ref": "#/definitions/ResponseProfileWithOffense" }
+            "schema": { "$ref": "#/definitions/ResponseProfileWithoutEmail" }
           },
           "400": {
             "schema": { "$ref": "#/definitions/APIError" }
           }
-        },
-        "security": [{ "bearer-token": [] }]
+        }
       }
     },
     "/users/{user_id}/promote/mod": {
@@ -2556,7 +2856,7 @@
       "type": "object",
       "required": ["title"],
       "properties": {
-        "exp_minutes": { "type": "number", "example": 60 },
+        "exp_minutes": { "type": "integer", "example": 60 },
         "message": {
           "type": "string",
           "example": "The site is going to go down tonight!"
@@ -2980,6 +3280,80 @@
         "sort_order": {
           "type": "integer",
           "example": 1
+        }
+      },
+      "xml": { "name": "ResponseForum" }
+    },
+    "ResponseForumList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseForum"
+      },
+      "xml": { "name": "ResponseForumList" }
+    },
+    "ResponseForumWithLastPost": {
+      "type": "object",
+      "properties": {
+        "is_deleted": {
+          "type": "boolean",
+          "example": true
+        },
+        "mod_only": {
+          "type": "boolean",
+          "example": true
+        },
+        "description": {
+          "type": "string",
+          "example": "For all sports-related discussion"
+        },
+        "icon_image_url": {
+          "type": ["string", "null"],
+          "example": "images.basementcommunity.com/icons/100x100.png"
+        },
+        "parent_forum_id": {
+          "type": ["integer", "null"],
+          "example": null
+        },
+        "moderators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "dril"
+              },
+              "id": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        },
+        "category_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Sports"
+        },
+        "icon_id": {
+          "type": ["integer", "null"],
+          "example": 12
+        },
+        "is_hidden": {
+          "type": "boolean",
+          "example": false
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "sort_order": {
+          "type": "integer",
+          "example": 1
         },
         "latest_post": {
           "type": "object",
@@ -3007,15 +3381,15 @@
           }
         }
       },
-      "xml": { "name": "ResponseForum" }
+      "xml": { "name": "ResponseForumWithLastPost" }
     },
-    "ResponseForumList": {
+    "ResponseForumListWithLastPost": {
       "type": "array",
       "items": {
         "type": "object",
-        "$ref": "#/definitions/ResponseForum"
+        "$ref": "#/definitions/ResponseForumWithLastPost"
       },
-      "xml": { "name": "ResponseForumList" }
+      "xml": { "name": "ResponseForumListWithLastPost" }
     },
     "ResponseIcon": {
       "type": "object",
@@ -3179,7 +3553,7 @@
       "properties": {
       },
       "additionalProperties": {
-        "type": "number"
+        "type": "integer"
       },
       "example":{
         "PMs": 0,
@@ -3206,11 +3580,11 @@
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
         "author_avatar_width": {
-          "type": ["number", "null"],
+          "type": ["integer", "null"],
           "example": 180
         },
         "author_avatar_height": {
-          "type": ["number", "null"],
+          "type": ["integer", "null"],
           "example": 180
         },
         "thread_title": {
@@ -3332,11 +3706,11 @@
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
         "author_avatar_height": {
-          "type": ["number", "null"],
+          "type": ["integer", "null"],
           "example": 180
         },
         "author_avatar_width": {
-          "type": ["number", "null"],
+          "type": ["integer", "null"],
           "example": 180
         },
         "author_username": {
@@ -3587,7 +3961,7 @@
           "type": "string",
           "example": "This is what appears under your avatar"
         },
-        "registerd_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
+        "registered_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
         "avatar_url": {
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
@@ -3622,7 +3996,6 @@
           "type": "string",
           "example": "eyJ0eXAiO1NiJ9.eyJleHAiOjE2ViIjoxfQ.c3_Jh8jH3g3WxrSs"
         },
-        "registered_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
         "mastadon": { "type": "string", "example": "https://mastadon.com/@someguy" },
         "offense": {
           "type": ["object", "null"],
@@ -3647,7 +4020,7 @@
       },
       "xml": { "name": "ResponseProfile" }
     },
-    "ResponseProfileWithOffense": {
+    "ResponseProfileWithoutEmail": {
       "type": "object",
       "properties": {
         "bio": { "type": "string", "example": "i am from new york city" },
@@ -3655,14 +4028,13 @@
           "type": "string",
           "example": "This is what appears under your avatar"
         },
-        "registerd_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
+        "registered_on": { "type": "string", "example": "2022-07-12T05:17:24Z" },
         "avatar_url": {
           "type": ["string", "null"],
           "example": "images.basementcommunity.com/avatars/60x60.png"
         },
         "id": { "type": "integer", "example": 2 },
         "discord": { "type": "string", "example": "@someguy" },
-        "email": { "type": "string", "example": "hello@gmail.com" },
         "gender": { "type": "string", "example": "female" },
         "forums_moderating": {
           "type": "array",
@@ -3678,43 +4050,34 @@
         "username": { "type": "string", "example": "orchids" },
         "other_link": { "type": "string", "example": "github.com/hello" },
         "twitter": { "type": "string", "example": "@dril" },
+        "mastadon": { "type": "string", "example": "@dril" },
+        "account_enabled": { "type": "boolean", "example": false },
+        "avatar_height": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
+        "avatar_width": {
+          "type": ["integer", "null"],
+          "example": 180
+        },
+        "rank": { "type": "integer", "example": 2 },
         "offense": {
-          "type": "object",
+          "type": ["object", "null"],
           "properties": {
-            "requested_user_id": {
-              "type": "integer",
-              "example": 2
+            "id": { "type": "integer", "example": 1 },
+            "is_ban": { "type": "boolean", "example": false },
+            "end_time": { 
+              "type": ["string", "null"], 
+              "example": "2024-04-11T10:29:29.199231Z" 
             },
+            "created_at": { "type": "string", "example": "2024-03-12T10:29:29.201049Z" },
+            "reason": { "type": "string", "example": "racist content" },
+            "post_id": { "type": ["integer", "null"], "example": 143 },
+            "private_message_post_id": { "type": ["integer", "null"], "example": null },
+            "approved_user_id": { "type": ["integer", "null"], "example": 143 },
+            "requested_user_id": { "type": ["integer", "null"], "example": 143 },
             "closed_user_id": { "type": ["integer", "null"], "example": null },
-            "created_at": {
-              "type": "string",
-              "example": "2022-07-13T05:57:16Z"
-            },
-            "is_ban": {
-              "type": "boolean",
-              "example": false
-            },
-            "private_message_post_id": {
-              "type": ["integer", "null"],
-              "example": null
-            },
-            "post_id": {
-              "type": ["integer", "null"],
-              "example": 12
-            },
-            "end_time": {
-              "type": "string",
-              "example": "2022-08-04T11:25:19Z"
-            },
-            "approved_user_id": { "type": ["integer", "null"], "example": 1 },
-            "reason": {
-              "type": "string",
-              "example": "This person acted really bad."
-            },
-            "id": {
-              "type": "integer",
-              "example": 1
-            }
+            "offender_id": { "type": "integer", "example": 543 }
           }
         }
       },
@@ -3729,7 +4092,7 @@
         },
         "reporter_id": { "type": "integer", "example": 1 },
         "reporter_username": { "type": "string", "example": "dril" },
-        "offender_id": { "type": "integer", "example": 12 },
+        "offender_user_id": { "type": "integer", "example": 12 },
         "offender_username": { "type": "string", "example": "greg" },
         "created_at": { "type": "string", "example": "2022-07-13T20:48:09Z" },
         "owner_username": {
@@ -3760,7 +4123,11 @@
           "type": ["string", "null"],
           "example": "How are you all?"
         },
-        "body": { "type": "string", "example": "This guy needs to be banned" }
+        "body": { "type": "string", "example": "This guy needs to be banned" },
+        "private_message_thread_title": {
+          "type": ["string", "null"],
+          "example": null
+        }
       },
       "xml": { "name": "ResponseReport" }
     },
@@ -3779,6 +4146,52 @@
       },
       "xml": { "name": "ResponseReportList" }
     },
+    "ResponseSearch": {
+      "type": "object",
+      "properties": {
+        "thread_title": { "type": "string", "example": "hello world" },
+        "thread_id": { "type": "integer", "example": 1254 },
+        "body": { "type": "string", "example": "hello all my name is orchids" },
+        "forum_id": { "type": "integer", "example": 12 },
+        "forum_title": { "type": "string", "example": "General" },
+        "posted_at": { "type": "string", "example": "2024-02-11T08:19:30.625164Z" },
+        "updated_at": { "type": "string", "example": "2024-02-11T08:19:30.625164Z" },
+        "author_username": { "type": "string", "example": "orchids" },
+        "author_id": { "type": "integer", "example": 43 },
+        "author_is_deleted": { "type": "boolean", "example": false },
+        "id": { "type": ["integer", "null"], "example": 543 }
+      },
+      "xml": { "name": "ResponseSearch" }
+    },
+    "ResponseSmiley": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "example": 23 },
+        "image_url": { "type": "string", "example": "https://images.basementcommunity.com/smileys/89ffb3481d484f5382cd3cf8bb00d665.svg" },
+        "shortcut": { "type": "string", "example": "happy" }
+      },
+      "xml": { "name": "ResponseSmiley" }
+    },
+    "ResponseSmileyList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/ResponseSmiley"
+      },
+      "xml": { "name": "ResponseSmileyList" }
+    },
+    "ResponseStats": {
+      "type": "object",
+      "properties": {
+        "latest_user": { "type": "string", "example": "dril" },
+        "total_posts": { "type": "integer", "example": 1254 },
+        "total_threads": { "type": "integer", "example": 254 },
+        "total_users": { "type": "integer", "example": 432 },
+        "link_of_the_day": { "type": "string", "example": "https://youtube.com/watch?v=fdsaf" },
+        "link_of_the_day_text": { "type": "string", "example": "check this out" }
+      },
+      "xml": { "name": "ResponseStats" }
+    },
     "ResponseThread": {
       "type": "object",
       "properties": {
@@ -3786,6 +4199,7 @@
         "is_closed": { "type": "boolean", "example": false },
         "is_deleted": { "type": "boolean", "example": false },
         "is_sticky": { "type": "boolean", "example": false },
+        "is_favorite": { "type": "boolean", "example": false },
         "total_posts": {
           "type": "integer",
           "example": 3
@@ -3841,6 +4255,14 @@
         "id": {
           "type": "integer",
           "example": 1
+        },
+        "forum_title": {
+          "type": "string",
+          "example": "General"
+        },
+        "author_is_deleted": {
+          "type": "boolean",
+          "example": false
         }
       },
       "xml": { "name": "ResponseThread" }
@@ -3859,6 +4281,105 @@
         "total_results": { "type": "integer", "example": 26 }
       },
       "xml": { "name": "ResponseThreadList" }
+    },
+    "ResponseThreadWithLastPost": {
+      "type": "object",
+      "properties": {
+        "created_at": { "type": "string", "example": "2022-07-13T20:48:09Z" },
+        "is_closed": { "type": "boolean", "example": false },
+        "is_deleted": { "type": "boolean", "example": false },
+        "is_sticky": { "type": "boolean", "example": false },
+        "is_favorite": { "type": "boolean", "example": false },
+        "total_posts": {
+          "type": "integer",
+          "example": 3
+        },
+        "number_posts_read": {
+          "type": "integer",
+          "example": 1
+        },
+        "rating": {
+          "type": "integer",
+          "example": 1
+        },
+        "total_votes": {
+          "type": "integer",
+          "example": 1
+        },
+        "views": {
+          "type": "integer",
+          "example": 1
+        },
+        "forum_id": {
+          "type": "integer",
+          "example": 12
+        },
+        "icon_image_url": {
+          "type": ["string", "null"],
+          "example": "images.basementcommunity.com/icons/100x100.png"
+        },
+        "author_username": {
+          "type": "string",
+          "example": "orchids"
+        },
+        "last_post_at": {
+          "type": "string",
+          "example": "2022-07-13T19:19:53Z"
+        },
+        "author_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "last_read_post_id": {
+          "type": ["integer", "null"],
+          "example": 23
+        },
+        "title": {
+          "type": "string",
+          "example": "Hello"
+        },
+        "icon_id": {
+          "type": ["integer", "null"],
+          "example": 12
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "forum_title": {
+          "type": "string",
+          "example": "General"
+        },
+        "author_is_deleted": {
+          "type": "boolean",
+          "example": false
+        },
+        "last_post": {
+          "type": ["object"],
+          "properties": {
+            "id": { "type": "integer", "example": 1 },
+            "author_id": { "type": "integer", "example": 450 },
+            "author_username": { "type": "string", "example": "orchids" },
+            "author_is_deleted": { "type": "boolean", "example": false }
+          }
+        }
+      },
+      "xml": { "name": "ResponseThreadWithLastPost" }
+    },
+    "ResponseThreadListWithLastPost": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ResponseThreadWithLastPost"
+          }
+        },
+        "pages": { "type": "integer", "example": 2 },
+        "total_results": { "type": "integer", "example": 26 }
+      },
+      "xml": { "name": "ResponseThreadListWithLastPost" }
     },
     "Thread": {
       "type": "object",
@@ -3923,6 +4444,17 @@
         }
       },
       "xml": { "name": "UpdateThread" }
+    },
+    "VoteThread": {
+      "type": "object",
+      "required": ["rating"],
+      "properties": {
+        "rating": {
+          "type": "integer",
+          "example": 3
+        }
+      },
+      "xml": { "name": "VoteThread" }
     }
   }
 }
